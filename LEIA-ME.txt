@@ -1,0 +1,69 @@
+===============================================================
+CERES BRIGADEIROS — PACOTE DO SITE (duas versões)
+===============================================================
+Repositório: https://github.com/augusto0108/Site-doceria
+
+Este pacote tem o site completo em duas versões. Escolha UMA:
+
+---------------------------------------------------------------
+1) VERSÃO PRONTA — não precisa instalar nada (RECOMENDADA)
+---------------------------------------------------------------
+Abra o arquivo:   site-estatico/index.html   (duplo clique)
+
+Funciona direto no navegador, offline, com todas as funções:
+filtros do cardápio, carrinho, finalizar no WhatsApp,
+"Monte seu Bolo", calculadora de festas e formulário de contato.
+
+---------------------------------------------------------------
+2) VERSÃO REACT (precisa do Node.js instalado)
+---------------------------------------------------------------
+Abra o terminal na pasta site-react e digite:
+
+    npm install
+    npm run dev
+
+Depois abra no navegador:  http://localhost:5173
+
+Para versão de produção já compilada, use um servidor local na
+pasta site-react/dist (ex.: "npx serve dist").
+
+===============================================================
+ERROS MAIS COMUNS (e como resolver)
+===============================================================
+
+✔ "Abri o site-react/index.html e deu tela branca / erro de arquivo"
+   → Isso é esperado. A versão React NÃO roda com duplo clique,
+     porque o navegador bloqueia arquivos .js modulares em file://.
+     Use a versão 1 (site-estatico) ou rode "npm run dev".
+
+✔ "npm não é reconhecido / erro ao instalar"
+   → Instale o Node.js em https://nodejs.org (versão LTS) e
+     reabra o terminal.
+
+✔ "Cliquei em "Finalizar no WhatsApp" e não abriu nada"
+   → O navegador bloqueou o pop-up. Clique no ícone de pop-up
+     na barra de endereço e escolha "Sempre permitir", ou use o
+     botão flutuante verde do WhatsApp (canto inferior direito).
+
+✔ "A foto da praia não aparece"
+   → Mantenha a pasta assets/img/ junto do index.html
+     (site-estatico/assets/img/camburizinho.jpg). No ZIP ela já
+     vem incluída.
+
+✔ "Imagens de produto não têm foto"
+   → É proposital: o cardápio usa os emojis do design. A única
+     foto é a da praia, na seção "Sobre nós" (créditos em
+     CREDITS.md — Wikimedia Commons, CC BY-SA 3.0).
+
+✔ Outro erro qualquer
+   → Mande um print (captura de tela) do erro e em qual versão
+     ele acontece (estática ou React) para eu corrigir.
+
+===============================================================
+DADOS DA LOJA (já preenchidos no site)
+===============================================================
+Endereço .......... Praia do Camburizinho, 744 — Camburizinho,
+                    São Sebastião/SP — CEP 11619-393
+WhatsApp .......... (12) 98121-0916
+Instagram ......... @ceresbrigadeiros
+Horários .......... Seg a Qui: 10h–20h · Sex a Dom: 10h–22h
