@@ -5,9 +5,16 @@ export default function About({ onCta }) {
         <div
           className="about__media reveal"
           role="img"
-          aria-label="Ambiente da Ceres Brigadeiros na Praia do Camburizinho"
+          aria-label="Praia do Camburizinho, em São Sebastião/SP — casa da Ceres Brigadeiros"
         >
-          <span aria-hidden="true">🍫</span>
+          <img
+            src="img/camburizinho.jpg"
+            alt=""
+            loading="lazy"
+            decoding="async"
+            width="900"
+            height="675"
+          />
           <div className="about__float">
             <b>+8</b>
             <span>anos em Camburi</span>

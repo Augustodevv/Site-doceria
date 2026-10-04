@@ -90,7 +90,10 @@ Endereço, horários, telefone, Instagram e WhatsApp estão em `info`/`whatsapp`
   públicos reais da loja; o PRD original (`prd_espaco_gourmet.md`) foi mantido como
   documento de referência.
 - A cor do PRD `#F3DEDS` é um hex inválido — foi corrigida para **`#F3DEDA`** (Creme Rosado).
-- As fotos são representadas por emojis e gradientes até as fotos reais dos produtos
-  serem adicionadas (substitua os blocos `.card__media` / `.hero__slide` por `<img>`).
+- **Imagens**: o cardápio e a galeria usam emojis + gradientes do design system
+  (decisão de manter o site sem fotos de produto). A **única foto** é a da praia do
+  Camburizinho, na seção *Sobre nós*, com crédito no rodapé e em [`CREDITS.md`](CREDITS.md)
+  (Wikimedia Commons, CC BY-SA 3.0) — troque pelo arquivo `camburizinho.jpg` em
+  `site-estatico/assets/img/` e `site-react/public/img/` quando tiver foto da loja.
 - Nenhum dado do cliente é armazenado — o pedido é só formatado e enviado ao WhatsApp
   pelo próprio navegador (conforme item de LGPD do PRD).

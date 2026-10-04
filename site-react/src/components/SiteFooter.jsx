@@ -113,7 +113,16 @@ export default function SiteFooter({ wppUrl, onFilter }) {
             © {new Date().getFullYear()} {brand} — Camburizinho, São Sebastião/SP. Todos os
             direitos reservados.
           </span>
-          <span>Feito com ♥ · O melhor brigadeiro do litoral</span>
+          <span>
+            Feito com ♥ · O melhor brigadeiro do litoral · Foto da praia:{" "}
+            <a
+              href="https://github.com/augusto0108/Site-doceria/blob/main/CREDITS.md"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Wikimedia Commons (CC BY-SA 3.0)
+            </a>
+          </span>
         </div>
       </div>
     </footer>
