@@ -60,6 +60,25 @@ ERROS MAIS COMUNS (e como resolver)
      ele acontece (estática ou React) para eu corrigir.
 
 ===============================================================
+COMO PUBLICAR NA NETLIFY (sem dar 404)
+===============================================================
+O erro "Página não encontrada (404)" da Netlify acontece porque
+a raiz publicada não tinha index.html. Já está corrigido de 3
+formas (qualquer uma resolve):
+
+✔ MAIS FÁCIL: arraste o arquivo ceres-brigadeiros-netlify.zip
+  em https://app.netlify.com/drop  (o index.html já está na raiz).
+
+✔ Site ligado ao GitHub: o repositório já foi atualizado com o
+  arquivo netlify.toml — clique em "Deploys" → "Trigger deploy".
+
+✔ Manual: Site configuration → Build & deploy → Build environment
+  → Publish directory = site-estatico
+
+Para publicar a versão React, use no netlify.toml:
+  base = "site-react" | command = "npm run build" | publish = "dist"
+
+===============================================================
 DADOS DA LOJA (já preenchidos no site)
 ===============================================================
 Endereço .......... Praia do Camburizinho, 744 — Camburizinho,
