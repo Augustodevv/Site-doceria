@@ -1,0 +1,23 @@
+# =========================================================
+# Ceres Brigadeiros — configuração do Netlify
+# Corrige o erro "Página não encontrada (404)" publicando
+# a versão estática na raiz do domínio.
+# =========================================================
+[build]
+  publish = "site-estatico"
+
+# ---------------------------------------------------------
+# Se quiser publicar a VERSÃO REACT em vez da estática,
+# substitua o bloco [build] acima por:
+#
+#   [build]
+#     base = "site-react"
+#     command = "npm run build"
+#     publish = "dist"
+# ---------------------------------------------------------
+
+# Endereços antigos / erros de digitação caem na home
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
