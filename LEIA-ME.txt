@@ -49,6 +49,14 @@ ERROS MAIS COMUNS (e como resolver)
    → Mantenha a pasta assets/img/ (e assets/img/produtos/)
      junto do index.html. No ZIP elas já vêm incluídas.
 
+✔ "Abri o index.html e a página veio quebrada/sem estilo"
+   → NÃO abra com duplo clique no index.html. Extraia o ZIP
+     ("Extrair tudo"), entre na pasta e dê duplo clique em
+     ABRIR-SITE.BAT — ele sobe o servidor e abre o navegador
+     no endereço certo (http://127.0.0.1:8317/). Feche a
+     janela preta para parar o servidor. Sem Node? Instale em
+     https://nodejs.org (ou use python -m http.server).
+
 ✔ "Por que suco e chá não têm foto?"
    → Só esses 2 itens não têm foto oficial no iFood. Eles
      usam o emoji do design system (fallback automático).
