@@ -6,9 +6,48 @@
   <title>Ceres Brigadeiros — Brigadeiros, Bolos e Doces em Camburizinho, São Sebastião</title>
   <meta name="description" content="Ceres Brigadeiros: brigadeiros gourmet, bolos e doces artesanais na Praia do Camburizinho, 744 — São Sebastião/SP. Peça pelo WhatsApp ou delivery pelo iFood." />
   <meta name="theme-color" content="#512113" />
+  <!-- TROQUE pelo domínio final após publicar (Netlify mostra o link em Site settings → Domain). -->
+  <link rel="canonical" href="https://ceresbrigadeiros.netlify.app/" />
+  <meta property="og:url" content="https://ceresbrigadeiros.netlify.app/" />
   <meta property="og:title" content="Ceres Brigadeiros — Brigadeiros, Bolos e Doces" />
   <meta property="og:description" content="O melhor brigadeiro do litoral, em Camburizinho. Peça pelo WhatsApp ou peça delivery pelo iFood." />
   <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:image" content="https://ceresbrigadeiros.netlify.app/assets/img/loja-interior.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Ceres Brigadeiros — Brigadeiros, Bolos e Doces" />
+  <meta name="twitter:image" content="https://ceresbrigadeiros.netlify.app/assets/img/loja-interior.jpg" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CafeOrCoffeeShop",
+    "name": "Ceres Brigadeiros",
+    "slogan": "O melhor brigadeiro do litoral",
+    "image": "https://ceresbrigadeiros.netlify.app/assets/img/loja-interior.jpg",
+    "url": "https://ceresbrigadeiros.netlify.app/",
+    "telephone": "+55-12-98121-0916",
+    "priceRange": "R$ 20–40",
+    "servesCuisine": ["Doceria", "Cafeteria", "Brigaderia"],
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Praia do Camburizinho, 744",
+      "addressLocality": "São Sebastião",
+      "addressRegion": "SP",
+      "postalCode": "11619-393",
+      "addressCountry": "BR"
+    },
+    "geo": { "@type": "GeoCoordinates", "latitude": -23.7755785, "longitude": -45.6466811 },
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Wednesday", "Thursday", "Friday"], "opens": "10:00", "closes": "20:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday", "Sunday"], "opens": "10:00", "closes": "22:00" }
+    ],
+    "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "1362" },
+    "sameAs": [
+      "https://www.instagram.com/ceresbrigadeiros/",
+      "https://www.ifood.com.br/delivery/sao-sebastiao-sp/ceres-brigadeiros-praia-de-camburi/a0d54796-c9e0-4902-9f58-fea2f2638034"
+    ]
+  }
+  </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -66,12 +105,7 @@
     <section class="hero" id="inicio" aria-label="Destaque">
       <div class="hero__slides" id="heroSlides">
         <div class="hero__slide is-active" data-tone="chocolate">
-          <div class="hero__emojis" aria-hidden="true">
-            <span style="top:18%;left:8%;animation-delay:0s">🎂</span>
-            <span style="top:62%;left:14%;animation-delay:1.4s">🧁</span>
-            <span style="top:26%;right:10%;animation-delay:.7s">🍓</span>
-            <span style="top:70%;right:16%;animation-delay:2s">🥐</span>
-          </div>
+          <div class="hero__bg" style="background-image:url('assets/img/loja-interior.jpg')" aria-hidden="true"></div>
           <div class="hero__content">
             <p class="script" style="color:var(--pink)">Bem-vindo ao</p>
             <h1>O melhor brigadeiro<br />do litoral</h1>
@@ -84,15 +118,10 @@
         </div>
 
         <div class="hero__slide" data-tone="pink">
-          <div class="hero__emojis" aria-hidden="true">
-            <span style="top:22%;left:12%;animation-delay:.3s">🍩</span>
-            <span style="top:64%;left:8%;animation-delay:1.1s">🍡</span>
-            <span style="top:20%;right:12%;animation-delay:1.7s">🍰</span>
-            <span style="top:66%;right:9%;animation-delay:.5s">🍮</span>
-          </div>
+          <div class="hero__bg" data-bg="assets/img/hero-doce.jpg" aria-hidden="true"></div>
           <div class="hero__content">
             <p class="eyebrow" style="justify-content:center">Feito à mão, todos os dias</p>
-            <h1>Da nossa cozinha<br />para a sua mesa</h1>
+            <h2>Da nossa cozinha<br />para a sua mesa</h2>
             <p>Receitas da Ceres, produção diária e atendimento pelo WhatsApp — com delivery também pelo iFood.</p>
             <div class="hero__cta">
               <a class="btn btn--primary" href="#cardapio">Ver Cardápio</a>
@@ -102,25 +131,21 @@
         </div>
 
         <div class="hero__slide" data-tone="cream">
-          <div class="hero__emojis" aria-hidden="true">
-            <span style="top:24%;left:10%;animation-delay:.9s">🎈</span>
-            <span style="top:60%;left:16%;animation-delay:.2s">🎉</span>
-            <span style="top:28%;right:11%;animation-delay:1.5s">🥳</span>
-            <span style="top:68%;right:14%;animation-delay:.6s">🎀</span>
-          </div>
+          <div class="hero__bg" data-bg="assets/img/produtos/brigadeiro-caixa-6.jpg" aria-hidden="true"></div>
           <div class="hero__content">
             <p class="eyebrow" style="justify-content:center">Caixinhas e kits para presentear</p>
-            <h1>Sua celebração<br />sem preocupações</h1>
+            <h2>Sua celebração<br />sem preocupações</h2>
             <p>Caixinha da Felicidade, kits de festa e encomendas personalizadas, com preço fechado e pedido em poucos cliques.</p>
             <div class="hero__cta">
               <a class="btn btn--primary" href="#cardapio">Ver Kits</a>
-              <a class="btn btn--ghost" data-wpp-link href="#" target="_blank" rel="noopener">Falar no WhatsApp</a>
+              <a class="btn btn--ghost" data-ifood-link href="#">Pedir no iFood 🛵</a>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="hero__dots" id="heroDots" role="tablist" aria-label="Selecionar destaque"></div>
+      <div class="hero__dots" id="heroDots" role="group" aria-label="Selecionar destaque"></div>
+      <button class="hero__pause" id="heroPause" type="button" aria-pressed="false" aria-label="Pausar carrossel">⏸</button>
     </section>
 
     <!-- ================= CATEGORIAS ================= -->
@@ -139,8 +164,8 @@
     <!-- ================= SOBRE ================= -->
     <section class="section section--pink" id="sobre" aria-labelledby="sobre-title">
       <div class="wrap about">
-        <div class="about__media reveal" role="img" aria-label="Praia do Camburizinho, em São Sebastião/SP — casa da Ceres Brigadeiros">
-          <img src="assets/img/camburizinho.jpg" alt="" loading="lazy" decoding="async" width="900" height="675" />
+        <div class="about__media reveal" role="img" aria-label="Salão e vitrine da Ceres Brigadeiros, em Camburizinho/São Sebastião/SP">
+          <img src="assets/img/loja-interior.jpg" alt="" loading="lazy" decoding="async" width="1200" height="1600" />
           <div class="about__float"><b>+8</b><span>anos em Camburi</span></div>
         </div>
         <div class="about__body reveal">
@@ -166,10 +191,13 @@
           <span class="eyebrow">Cardápio online</span>
           <h2 id="card-title">Delícias fresquinhas do dia</h2>
           <p>Filtre por categoria e adicione direto à sua encomenda. Depois é só enviar tudo pelo WhatsApp.</p>
+          <p class="price-note" id="priceNote"></p>
+          <a class="btn btn--ifood btn--sm" data-ifood-link href="#" style="margin-top:6px">Ou peça pelo iFood 🛵</a>
         </div>
 
-        <div class="tabs reveal" id="tabs" role="tablist" aria-label="Filtrar cardápio por categoria"></div>
-        <div class="grid-products" id="products" aria-live="polite"></div>
+        <div class="tabs reveal" id="tabs" role="group" aria-label="Filtrar cardápio por categoria"></div>
+        <div class="grid-products" id="products"></div>
+        <p class="sr-only" role="status" id="filterStatus"></p>
       </div>
     </section>
 
@@ -249,10 +277,15 @@
         <div class="section-head reveal">
           <div class="divider" aria-hidden="true">💬 ♥ 💬</div>
           <span class="eyebrow">Quem já provou, recomenda</span>
-          <h2 id="dep-title">Depoimentos</h2>
-          <p>Histórias de quem transformou nossa confeção em parte da própria celebração.</p>
+          <h2 id="dep-title">O que dizem no Google</h2>
+          <p>Avaliações reais de clientes no Google Maps — sem filtro, sem roteiro.</p>
+          <a class="rating-badge" id="ratingBadge" href="#" target="_blank" rel="noopener">★★★★★ <span id="ratingText">4,9 · 1.362 avaliações no Google</span></a>
         </div>
         <div class="grid-testimonials reveal" id="testimonials"></div>
+        <div class="dep-links reveal">
+          <a class="btn btn--pink btn--sm" id="mapsAllLink" href="#" target="_blank" rel="noopener">Ver todas no Google Maps ↗</a>
+          <a class="btn btn--ghost btn--sm" id="mapsReviewLink" href="#" target="_blank" rel="noopener">Avalie você também ♥</a>
+        </div>
       </div>
     </section>
 
@@ -297,9 +330,13 @@
               <span class="info-card__icon" aria-hidden="true">📸</span>
               <div><b>Instagram</b><span id="infoInsta">@ceresbrigadeiros</span></div>
             </div>
-            <div class="map-placeholder" aria-hidden="true" style="height:170px;display:grid;place-items:center;background:linear-gradient(135deg,var(--pink),var(--cream));border-radius:var(--radius-md);font-size:2rem">
-              🗺️
+            <div class="info-card">
+              <span class="info-card__icon" aria-hidden="true">🛵</span>
+              <div><b>iFood</b><span><a data-ifood-link href="#" style="text-decoration:underline;font-weight:600">Peça pelo iFood — entrega em Camburizinho e região →</a></span></div>
             </div>
+            <a class="map-placeholder" href="https://www.google.com/maps/search/?api=1&query=Praia+do+Camburizinho+744+S%C3%A3o+Sebasti%C3%A3o+SP" target="_blank" rel="noopener" aria-label="Abrir endereço no Google Maps" style="min-height:170px;display:grid;place-items:center;gap:6px;background:linear-gradient(135deg,var(--pink),var(--cream));border-radius:var(--radius-md);font-size:1.6rem;text-decoration:none;color:var(--chocolate);font-weight:600">
+              🗺️ <span style="font-size:.92rem">Abrir no Google Maps</span>
+            </a>
           </div>
 
           <form class="form reveal" id="contactForm" novalidate>
@@ -383,6 +420,7 @@
             <li id="footerAddress">Praia do Camburizinho, 744 — Camburizinho, São Sebastião/SP</li>
             <li id="footerHours">Seg a Qui: 10h–20h · Sex a Dom: 10h–22h</li>
             <li><a data-wpp-link href="#" target="_blank" rel="noopener">Pedir pelo WhatsApp →</a></li>
+            <li><a data-ifood-link href="#">Pedir pelo iFood →</a></li>
             <li><a href="https://www.instagram.com/ceresbrigadeiros/" target="_blank" rel="noopener">Instagram @ceresbrigadeiros</a></li>
             <li><a href="#contato">Formulário de contato</a></li>
           </ul>
@@ -391,7 +429,7 @@
 
       <div class="footer__bottom">
         <span>© <span id="year">2026</span> Ceres Brigadeiros — Camburizinho, São Sebastião/SP. Todos os direitos reservados.</span>
-        <span>Feito com ♥ · O melhor brigadeiro do litoral · Foto da praia: <a href="https://github.com/augusto0108/Site-doceria/blob/main/CREDITS.md" target="_blank" rel="noopener noreferrer">Wikimedia Commons (CC BY-SA 3.0)</a></span>
+        <span>Feito com ♥ · O melhor brigadeiro do litoral · Fotos: iFood, Google Maps e Instagram da loja</span>
       </div>
     </div>
   </footer>

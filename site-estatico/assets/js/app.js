@@ -20,6 +20,25 @@
   };
   applyWppLinks(`Olá, ${D.brand}! Vim pelo site e gostaria de fazer uma encomenda. 🍫`);
 
+  const applyIfoodLinks = () => {
+    if (!D.info.ifood) return;
+    $$("[data-ifood-link]").forEach((el) => {
+      el.setAttribute("href", D.info.ifood);
+      el.setAttribute("target", "_blank");
+      el.setAttribute("rel", "noopener");
+    });
+  };
+  applyIfoodLinks();
+
+  /* Hero: só o slide 1 já carrega; os outros entram depois do load (LCP) */
+  const loadHeroBgs = () =>
+    $$(".hero__bg[data-bg]").forEach((el) => {
+      el.style.backgroundImage = `url("${el.dataset.bg}")`;
+      el.removeAttribute("data-bg");
+    });
+  if (document.readyState === "complete") loadHeroBgs();
+  else window.addEventListener("load", loadHeroBgs, { once: true });
+
   /* ---------------- Informações da loja ---------------- */
   $("#infoAddress").textContent = D.info.address;
   $("#infoHours").textContent = D.info.hours;
@@ -28,6 +47,13 @@
   $("#footerHours").textContent = D.info.hours;
   $("#insta-title").textContent = `Siga ${D.info.instagram}`;
   $("#year").textContent = new Date().getFullYear();
+
+  /* Checkout: não deixar escolher uma data no passado */
+  const coDate = $("#coDate");
+  if (coDate) {
+    const t = new Date();
+    coDate.min = `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, "0")}-${String(t.getDate()).padStart(2, "0")}`;
+  }
 
   /* ---------------- Toast ---------------- */
   let toastTimer;
@@ -62,7 +88,6 @@
   slides.forEach((_, i) => {
     const b = document.createElement("button");
     b.type = "button";
-    b.setAttribute("role", "tab");
     b.setAttribute("aria-label", `Destaque ${i + 1}`);
     b.addEventListener("click", () => { goHero(i); restartHero(); });
     dotsWrap.appendChild(b);
@@ -72,12 +97,35 @@
   function goHero(i) {
     heroIdx = (i + slides.length) % slides.length;
     slides.forEach((s, k) => s.classList.toggle("is-active", k === heroIdx));
-    dots.forEach((d, k) => d.classList.toggle("is-active", k === heroIdx));
+    dots.forEach((d, k) => {
+      d.classList.toggle("is-active", k === heroIdx);
+      if (k === heroIdx) d.setAttribute("aria-current", "true");
+      else d.removeAttribute("aria-current");
+    });
+    const bg = slides[heroIdx].querySelector(".hero__bg[data-bg]");
+    if (bg) {
+      bg.style.backgroundImage = `url("${bg.dataset.bg}")`;
+      bg.removeAttribute("data-bg");
+    }
   }
   function restartHero() {
     clearInterval(heroTimer);
-    heroTimer = setInterval(() => goHero(heroIdx + 1), 6000);
+    if (!heroPaused) heroTimer = setInterval(() => goHero(heroIdx + 1), 6000);
   }
+  /* botão pausar/continuar (WCAG 2.2.2) + respeita prefers-reduced-motion */
+  let heroPaused = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const pauseBtn = $("#heroPause");
+  const syncPauseBtn = () => {
+    pauseBtn.setAttribute("aria-pressed", String(heroPaused));
+    pauseBtn.setAttribute("aria-label", heroPaused ? "Continuar carrossel" : "Pausar carrossel");
+    pauseBtn.textContent = heroPaused ? "▶" : "⏸";
+  };
+  pauseBtn.addEventListener("click", () => {
+    heroPaused = !heroPaused;
+    syncPauseBtn();
+    restartHero();
+  });
+  syncPauseBtn();
   goHero(0);
   restartHero();
 
@@ -96,14 +144,21 @@
   const tabsEl = $("#tabs");
   const cats = [{ id: "todos", label: "Todos" }].concat(D.categories.map((c) => ({ id: c.id, label: c.label })));
   tabsEl.innerHTML = cats
-    .map((c, i) => `<button class="tab${i === 0 ? " is-active" : ""}" role="tab" data-filter="${c.id}" aria-selected="${i === 0}">${esc(c.label)}</button>`)
+    .map((c, i) => `<button class="tab${i === 0 ? " is-active" : ""}" data-filter="${c.id}" aria-pressed="${i === 0}">${esc(c.label)}</button>`)
     .join("");
 
   const toneByCat = { brigadeiros: "chocolate", bolos: "pink", doces: "", kits: "rose", cafeteria: "cream" };
+  const mediaHTML = (p) =>
+    p.img
+      ? `<img src="${p.img}" alt="${esc(p.name)}" loading="lazy" decoding="async" width="600" height="450"
+           onerror="this.closest('.card__media').classList.remove('has-img');this.remove()" />
+         <span class="card__emoji" aria-hidden="true">${p.emoji}</span>`
+      : `<span aria-hidden="true">${p.emoji}</span>`;
+
   $("#products").innerHTML = D.products.map((p) => `
-    <article class="card" data-cat="${p.cat}">
+    <article class="card${p.img ? " has-img" : ""}" data-cat="${p.cat}">
       <div class="card__media" data-tone="${toneByCat[p.cat]}" role="img" aria-label="${esc(p.name)} — ${esc(p.desc)}">
-        <span aria-hidden="true">${p.emoji}</span>
+        ${mediaHTML(p)}
         ${p.tag ? `<span class="card__tag">${esc(p.tag)}</span>` : ""}
       </div>
       <div class="card__body">
@@ -117,14 +172,20 @@
     </article>`).join("");
 
   function applyFilter(id) {
+    let n = 0;
+    const label = (cats.find((c) => c.id === id) || {}).label || "";
     $$(".tab", tabsEl).forEach((t) => {
       const on = t.dataset.filter === id;
       t.classList.toggle("is-active", on);
-      t.setAttribute("aria-selected", String(on));
+      t.setAttribute("aria-pressed", String(on));
     });
     $$("#products .card").forEach((card) => {
-      card.classList.toggle("is-hidden", id !== "todos" && card.dataset.cat !== id);
+      const show = id === "todos" || card.dataset.cat === id;
+      card.classList.toggle("is-hidden", !show);
+      if (show) n++;
     });
+    const st = $("#filterStatus");
+    if (st) st.textContent = `${n} ${n === 1 ? "produto" : "produtos"} em ${label}`;
   }
   tabsEl.addEventListener("click", (e) => {
     const t = e.target.closest("[data-filter]");
@@ -135,40 +196,83 @@
     if (link) applyFilter(link.dataset.filter);
   });
 
-  /* ---------------- Depoimentos ---------------- */
+  /* ---------------- Depoimentos (avaliações reais do Google) ---------------- */
+  $("#ratingText").textContent = `${D.info.mapsRating} · ${D.info.mapsReviews} avaliações no Google`;
+  $("#ratingBadge").href = D.info.mapsUrl;
+  $("#mapsAllLink").href = D.info.mapsUrl;
+  $("#mapsReviewLink").href = D.info.mapsReviewUrl;
+  $("#priceNote").textContent = D.info.priceNote;
   $("#testimonials").innerHTML = D.testimonials.map((t) => `
     <blockquote class="quote">
       <div class="quote__stars" aria-label="${t.stars} de 5 estrelas">${"★".repeat(t.stars)}${"☆".repeat(5 - t.stars)}</div>
-      <p>${esc(t.text)}</p>
+      <p>“${esc(t.text)}”</p>
       <footer>
         <span class="quote__avatar" aria-hidden="true">${esc(t.name.charAt(0))}</span>
         <span class="quote__who"><b>${esc(t.name)}</b><span>${esc(t.role)}</span></span>
       </footer>
     </blockquote>`).join("");
 
-  /* ---------------- Galeria ---------------- */
+  /* ---------------- Galeria (fotos reais) ---------------- */
   $("#gallery").innerHTML = D.gallery.map((g) => `
-    <a class="gallery-item" data-tone="${g.tone}" href="#instagram" aria-label="${esc(g.label)}">
-      <span aria-hidden="true">${g.emoji}</span>
+    <a class="gallery-item" href="${D.info.instagramUrl}" target="_blank" rel="noopener" aria-label="${esc(g.label)} — ver no Instagram" title="${esc(g.label)}">
+      <img src="${g.img}" alt="${esc(g.label)}" loading="lazy" decoding="async" width="600" height="600"
+           onerror="this.closest('.gallery-item').remove()" />
+      <span class="gallery-item__cap" aria-hidden="true">${esc(g.label)}</span>
     </a>`).join("");
 
   /* ============================================================
      CARRINHO (encomenda)
      ============================================================ */
   const cart = [];
+  try {
+    const saved = JSON.parse(localStorage.getItem("ceres_cart_v1") || "[]");
+    if (Array.isArray(saved)) {
+      /* revalida contra o catálogo atual (preço/nome sempre frescos) */
+      const byId = Object.fromEntries(D.products.map((p) => [p.id, p]));
+      saved.forEach((s) => {
+        if (!s || typeof s.qty !== "number" || s.qty < 1) return;
+        if (s.id === "bolo-custom" || s.key?.startsWith("bolo-custom|")) {
+          cart.push({ ...s });
+        } else if (byId[s.id]) {
+          const p = byId[s.id];
+          cart.push({ id: p.id, name: p.name, price: p.price, emoji: p.emoji, img: p.img, note: p.desc, qty: Math.min(s.qty, 99) });
+        }
+      });
+    }
+  } catch { /* armazenamento indisponível: segue sem persistência */ }
+  const saveCart = () => {
+    try { localStorage.setItem("ceres_cart_v1", JSON.stringify(cart)); } catch { /* ignore */ }
+  };
   const overlay = $("#overlay");
   const drawer = $("#drawer");
   const checkout = $("#checkout");
+  let lastFocus = null;
+
+  /* --- focus trap genérico: Tab circula dentro do painel; Escape fecha --- */
+  const trapTab = (e, root) => {
+    if (e.key !== "Tab") return;
+    const els = [...root.querySelectorAll('button:not([disabled]), a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])')]
+      .filter((el) => el.offsetParent !== null);
+    if (!els.length) return;
+    const first = els[0], last = els[els.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  };
+  drawer.addEventListener("keydown", (e) => trapTab(e, drawer));
+  checkout.addEventListener("keydown", (e) => trapTab(e, checkout));
 
   const openDrawer = (on) => {
+    if (on) lastFocus = document.activeElement;
     drawer.classList.toggle("is-open", on);
     drawer.setAttribute("aria-hidden", String(!on));
     overlay.hidden = false;
     overlay.classList.toggle("is-open", on || checkout.classList.contains("is-open"));
     if (on) $("#drawerClose").focus();
+    else if (lastFocus?.focus) lastFocus.focus();
   };
   const openCheckout = (on) => {
     if (on && !cart.length) return toast("Sua encomenda está vazia 🙂");
+    if (on) lastFocus = document.activeElement;
     checkout.classList.toggle("is-open", on);
     checkout.setAttribute("aria-hidden", String(!on));
     overlay.hidden = false;
@@ -176,7 +280,7 @@
     if (on) {
       renderCheckoutSummary();
       $("#coName").focus();
-    }
+    } else if (lastFocus?.focus) lastFocus.focus();
   };
   const closeAll = () => { openDrawer(false); openCheckout(false); overlay.classList.remove("is-open"); };
 
@@ -201,7 +305,7 @@
     $("#cartItems").innerHTML = cart.length
       ? cart.map((i, idx) => `
         <div class="cart-item">
-          <span class="cart-item__thumb" aria-hidden="true">${i.emoji}</span>
+          <span class="cart-item__thumb" aria-hidden="true">${i.img ? `<img src="${i.img}" alt="" loading="lazy" width="54" height="54" />` : i.emoji}</span>
           <div>
             <b>${esc(i.name)}</b>
             ${i.note ? `<small>${esc(i.note)}</small>` : ""}
@@ -219,6 +323,7 @@
       : `<div class="drawer__empty"><span aria-hidden="true">🧁</span>Sua encomenda está vazia.<br />Explore o cardápio ou monte seu bolo!</div>`;
 
     $("#checkoutBtn").disabled = cart.length === 0;
+    saveCart();
   }
 
   function addToCart(item) {
@@ -246,7 +351,7 @@
     const btn = e.target.closest("[data-add]");
     if (!btn) return;
     const p = D.products.find((x) => x.id === btn.dataset.add);
-    addToCart({ id: p.id, name: p.name, price: p.price, emoji: p.emoji, note: p.desc });
+    addToCart({ id: p.id, name: p.name, price: p.price, emoji: p.emoji, img: p.img, note: p.desc });
   });
 
   $("#checkoutBtn").addEventListener("click", () => openCheckout(true));
@@ -315,6 +420,8 @@
     openCheckout(false);
     openDrawer(false);
     window.open(wppURL(lines.join("\n")), "_blank", "noopener");
+    cart.length = 0;
+    renderCart();
     toast("Pedido formatado! Só enviar no WhatsApp 💬");
   });
 
@@ -468,8 +575,19 @@
       `Topper: ${labelOf("topper", choices.topper)}`
     ].join(" · ");
 
+    /* chave única por combinação: bolos diferentes viram itens diferentes;
+       a MESMA combinação continua somando quantidade */
+    const cfg = [
+      choices.tamanho,
+      choices.massa,
+      [...choices.recheio].sort().join("+"),
+      choices.cobertura,
+      choices.topper,
+      choices.notes || ""
+    ].join("|");
+
     addToCart({
-      key: "bolo-custom",
+      key: `bolo-custom|${cfg}`,
       id: "bolo-custom",
       name: "Bolo Personalizado (Monte seu Bolo)",
       price,

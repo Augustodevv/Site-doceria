@@ -16,8 +16,8 @@
 #     publish = "dist"
 # ---------------------------------------------------------
 
-# Endereços antigos / erros de digitação caem na home
+# URLs inexistentes mostram a página 404 (arquivos reais passam direto).
 [[redirects]]
   from = "/*"
-  to = "/index.html"
-  status = 200
+  to = "/404.html"
+  status = 404

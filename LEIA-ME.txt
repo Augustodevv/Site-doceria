@@ -45,15 +45,14 @@ ERROS MAIS COMUNS (e como resolver)
      na barra de endereço e escolha "Sempre permitir", ou use o
      botão flutuante verde do WhatsApp (canto inferior direito).
 
-✔ "A foto da praia não aparece"
-   → Mantenha a pasta assets/img/ junto do index.html
-     (site-estatico/assets/img/camburizinho.jpg). No ZIP ela já
-     vem incluída.
+✔ "As fotos não aparecem"
+   → Mantenha a pasta assets/img/ (e assets/img/produtos/)
+     junto do index.html. No ZIP elas já vêm incluídas.
 
-✔ "Imagens de produto não têm foto"
-   → É proposital: o cardápio usa os emojis do design. A única
-     foto é a da praia, na seção "Sobre nós" (créditos em
-     CREDITS.md — Wikimedia Commons, CC BY-SA 3.0).
+✔ "Por que suco e chá não têm foto?"
+   → Só esses 2 itens não têm foto oficial no iFood. Eles
+     usam o emoji do design system (fallback automático).
+     Origem das fotos: CREDITS.md.
 
 ✔ Outro erro qualquer
    → Mande um print (captura de tela) do erro e em qual versão
